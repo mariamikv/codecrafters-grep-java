@@ -26,18 +26,40 @@ public class Main {
             return inputLine.contains(pattern);
         } else if (pattern.equals("\\d")) {
             return matchDigit(inputLine);
+        } else if (pattern.equals("\\w")) {
+            return matchWordCharacters(inputLine);
         } else {
             throw new RuntimeException("Unhandled pattern: " + pattern);
         }
     }
 
     private static Boolean matchDigit(String input) {
-        Integer[] numbers = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        Integer[] numbers = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         boolean result = false;
 
-        for (int number: numbers) {
+        for (int number : numbers) {
             if (input.contains(String.valueOf(number))) {
                 result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private static Boolean matchWordCharacters(String input) {
+        boolean result = false;
+        boolean hasLetter = false;
+        for (int i = 0; i < input.length(); i++) {
+            char temp = input.charAt(i);
+            if (Character.isLetter(temp)) {
+                hasLetter = true;
+            }
+            boolean expression = hasLetter && (Character.isLetter(temp) || Character.isDigit(temp) || temp == '_');
+            if (expression) {
+                result = true;
+            } else {
+                result = false;
                 break;
             }
         }
