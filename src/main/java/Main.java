@@ -49,13 +49,9 @@ public class Main {
 
     private static Boolean matchWordCharacters(String input) {
         boolean result = false;
-        boolean hasLetter = false;
         for (int i = 0; i < input.length(); i++) {
             char temp = input.charAt(i);
-            if (Character.isLetter(temp)) {
-                hasLetter = true;
-            }
-            boolean expression = hasLetter && (Character.isLetter(temp) || Character.isDigit(temp) || temp == '_');
+            boolean expression = Character.isLetter(temp) || Character.isDigit(temp) || temp == '_';
             if (expression) {
                 result = true;
             } else {
