@@ -24,8 +24,24 @@ public class Main {
     public static boolean matchPattern(String inputLine, String pattern) {
         if (pattern.length() == 1) {
             return inputLine.contains(pattern);
+        } else if (pattern.equals("\\d")) {
+            return matchDigit(inputLine);
         } else {
             throw new RuntimeException("Unhandled pattern: " + pattern);
         }
+    }
+
+    private static Boolean matchDigit(String input) {
+        Integer[] numbers = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        boolean result = false;
+
+        for (int number: numbers) {
+            if (input.contains(String.valueOf(number))) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 }
