@@ -28,6 +28,8 @@ public class Main {
             return matchDigit(inputLine);
         } else if (pattern.equals("\\w")) {
             return matchWordCharacters(inputLine);
+        } else if (pattern.startsWith("[") && pattern.endsWith("]")) {
+            return positiveCharacterGroups(inputLine, pattern);
         } else {
             throw new RuntimeException("Unhandled pattern: " + pattern);
         }
@@ -53,6 +55,20 @@ public class Main {
             char temp = input.charAt(i);
             result = Character.isLetter(temp) || Character.isDigit(temp) || temp == '_';
             if (result) {
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private static Boolean positiveCharacterGroups(String input, String pattern) {
+        String updatedPattern = pattern.substring(1, pattern.length() - 1);
+        char[] patterns = updatedPattern.toCharArray();
+        boolean result = false;
+        for (char c : patterns) {
+            if (input.contains(String.valueOf(c))) {
+                result = true;
                 break;
             }
         }
