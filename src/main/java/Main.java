@@ -51,11 +51,8 @@ public class Main {
         boolean result = false;
         for (int i = 0; i < input.length(); i++) {
             char temp = input.charAt(i);
-            boolean expression = Character.isLetter(temp) || Character.isDigit(temp) || temp == '_';
-            if (expression) {
-                result = true;
-            } else {
-                result = false;
+            result = Character.isLetter(temp) || Character.isDigit(temp) || temp == '_';
+            if (result) {
                 break;
             }
         }
