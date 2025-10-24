@@ -30,6 +30,8 @@ public class Main {
             return matchWordCharacters(inputLine);
         } else if (pattern.startsWith("[") && pattern.endsWith("]")) {
             return positiveCharacterGroups(inputLine, pattern);
+        } else if (pattern.startsWith("[^") && pattern.endsWith("]")) {
+            return negativeCharacterGroups(inputLine, pattern);
         } else {
             throw new RuntimeException("Unhandled pattern: " + pattern);
         }
@@ -68,6 +70,20 @@ public class Main {
         boolean result = false;
         for (char c : patterns) {
             if (input.contains(String.valueOf(c))) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private static Boolean negativeCharacterGroups(String input, String pattern) {
+        String updatedPattern = pattern.substring(2, pattern.length() - 1);
+        char[] patterns = updatedPattern.toCharArray();
+        boolean result = false;
+        for (char c : patterns) {
+            if (!input.contains(String.valueOf(c))) {
                 result = true;
                 break;
             }
