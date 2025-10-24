@@ -28,10 +28,10 @@ public class Main {
             return matchDigit(inputLine);
         } else if (pattern.equals("\\w")) {
             return matchWordCharacters(inputLine);
-        } else if (pattern.startsWith("[") && pattern.endsWith("]")) {
-            return positiveCharacterGroups(inputLine, pattern);
         } else if (pattern.startsWith("[^") && pattern.endsWith("]")) {
             return negativeCharacterGroups(inputLine, pattern);
+        } else if (pattern.startsWith("[") && pattern.endsWith("]")) {
+            return positiveCharacterGroups(inputLine, pattern);
         } else {
             throw new RuntimeException("Unhandled pattern: " + pattern);
         }
