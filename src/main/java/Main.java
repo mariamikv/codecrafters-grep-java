@@ -2,21 +2,21 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        if (args.length != 2 || !args[0].equals("-E")) {
-//            System.out.println("Usage: ./your_program.sh -E <pattern>");
-//            System.exit(1);
-//        }
+        if (args.length != 2 || !args[0].equals("-E")) {
+            System.out.println("Usage: ./your_program.sh -E <pattern>");
+            System.exit(1);
+        }
 
-        String pattern = "\\d+";
+        String pattern = args[0];
         Scanner scanner = new Scanner(System.in);
-        String inputLine = "123";
+        String inputLine = scanner.nextLine();
 
         System.err.println("Logs from your program will appear here!");
 
         if (matchPattern(inputLine, pattern)) {
-            System.out.println(0);
+            System.exit(0);
         } else {
-            System.out.println(1);
+            System.exit(1);
         }
     }
 
