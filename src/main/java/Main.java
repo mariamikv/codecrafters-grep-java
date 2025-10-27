@@ -2,25 +2,48 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length != 2 || !args[0].equals("-E")) {
-            System.out.println("Usage: ./your_program.sh -E <pattern>");
-            System.exit(1);
-        }
+//        if (args.length != 2 || !args[0].equals("-E")) {
+//            System.out.println("Usage: ./your_program.sh -E <pattern>");
+//            System.exit(1);
+//        }
 
-        String pattern = args[1];
+        String pattern = "\\d+";
         Scanner scanner = new Scanner(System.in);
-        String inputLine = scanner.nextLine();
+        String inputLine = "123";
 
         System.err.println("Logs from your program will appear here!");
 
         if (matchPattern(inputLine, pattern)) {
-            System.exit(0);
+            System.out.println(0);
         } else {
-            System.exit(1);
+            System.out.println(1);
         }
     }
 
     public static boolean matchPattern(String inputLine, String pattern) {
+        if (pattern.contains("+")) {
+            if (pattern.contains("d+")) {
+                for (int i = 0; i <= inputLine.length(); i++) {
+                    if (matchFromPosition(inputLine, i, pattern.replace("+", ""), 0)) {
+                        return true;
+                    }
+                }
+            }
+
+            int patternIndex = pattern.indexOf("+");
+            char character = pattern.charAt(patternIndex - 1);
+            int count = 0;
+            if (inputLine.contains(Character.toString(character))) {
+                for (int i = 0; i < inputLine.length(); i++) {
+                    if (inputLine.charAt(i) == character) {
+                        count++;
+                    }
+                }
+            }
+
+            return count >= 1;
+        }
+
         if (pattern.startsWith("^")) {
             return matchFromPosition(inputLine, 0, pattern, 1);
         }
@@ -45,6 +68,8 @@ public class Main {
     }
 
     private static boolean matchFromPosition(String input, int inputPos, String pattern, int patternPos) {
+        System.out.println(input);
+        System.out.println(pattern);
         if (patternPos >= pattern.length()) {
             return true;
         }
