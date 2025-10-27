@@ -7,7 +7,7 @@ public class Main {
             System.exit(1);
         }
 
-        String pattern = args[0];
+        String pattern = args[1];
         Scanner scanner = new Scanner(System.in);
         String inputLine = scanner.nextLine();
 
@@ -68,8 +68,6 @@ public class Main {
     }
 
     private static boolean matchFromPosition(String input, int inputPos, String pattern, int patternPos) {
-        System.out.println(input);
-        System.out.println(pattern);
         if (patternPos >= pattern.length()) {
             return true;
         }
