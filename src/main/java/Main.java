@@ -25,6 +25,17 @@ public class Main {
             return matchFromPosition(inputLine, 0, pattern, 1);
         }
 
+        if (pattern.endsWith("$")) {
+            String newPattern = pattern.substring(0, pattern.length() - 1);
+            for (int i = 0; i <= inputLine.length(); i++) {
+                if (matchFromPosition(inputLine, i, newPattern, 0)
+                        && i + newPatternLength(newPattern) == inputLine.length()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         for (int i = 0; i <= inputLine.length(); i++) {
             if (matchFromPosition(inputLine, i, pattern, 0)) {
                 return true;
@@ -36,6 +47,14 @@ public class Main {
     private static boolean matchFromPosition(String input, int inputPos, String pattern, int patternPos) {
         if (patternPos >= pattern.length()) {
             return true;
+        }
+
+        if (inputPos > input.length()) {
+            return false;
+        }
+
+        if (pattern.charAt(patternPos) == '$') {
+            return inputPos == input.length();
         }
 
         if (inputPos >= input.length()) {
@@ -77,6 +96,18 @@ public class Main {
         }
 
         return false;
+    }
+
+    private static int newPatternLength(String pattern) {
+        int count = 0;
+        for (int i = 0; i < pattern.length(); i++) {
+            char c = pattern.charAt(i);
+            if (c == '\\' && i + 1 < pattern.length()) {
+                i++;
+            }
+            count++;
+        }
+        return count;
     }
 
     private static boolean matchCharacterClass(char c, String charClass) {
