@@ -21,6 +21,10 @@ public class Main {
     }
 
     public static boolean matchPattern(String inputLine, String pattern) {
+        if (pattern.startsWith("^")) {
+            return matchFromPosition(inputLine, 0, pattern, 1);
+        }
+
         for (int i = 0; i <= inputLine.length(); i++) {
             if (matchFromPosition(inputLine, i, pattern, 0)) {
                 return true;
@@ -39,8 +43,9 @@ public class Main {
         }
 
         char currentChar = input.charAt(inputPos);
+        char currentPattern = pattern.charAt(patternPos);
 
-        if (pattern.charAt(patternPos) == '\\' && patternPos + 1 < pattern.length()) {
+        if (currentPattern == '\\' && patternPos + 1 < pattern.length()) {
             char escapeChar = pattern.charAt(patternPos + 1);
 
             if (escapeChar == 'd') {
@@ -56,7 +61,7 @@ public class Main {
             }
         }
 
-        if (pattern.charAt(patternPos) == '[') {
+        if (currentPattern == '[') {
             int closingBracket = pattern.indexOf(']', patternPos);
             if (closingBracket != -1) {
                 String charClass = pattern.substring(patternPos, closingBracket + 1);
@@ -67,7 +72,7 @@ public class Main {
             }
         }
 
-        if (pattern.charAt(patternPos) == currentChar) {
+        if (currentPattern == currentChar) {
             return matchFromPosition(input, inputPos + 1, pattern, patternPos + 1);
         }
 
